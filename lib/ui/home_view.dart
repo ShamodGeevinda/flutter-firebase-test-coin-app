@@ -2,6 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coin/net/flutterfire.dart';
+import 'package:coin/ui/authentication.dart';
+import 'package:coin/ui/item_view.dart';
 import '/net/api_methods.dart';
 import '/ui/add_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,12 +21,10 @@ class _HomeViewState extends State<HomeView> {
   double ethereum = 0.0;
   double tether = 0.0;
   TextEditingController _controller = TextEditingController();
-  
+
   @override
   initState() {
     updateValues();
-    
-
   }
 
   updateValues() async {
@@ -47,6 +47,9 @@ class _HomeViewState extends State<HomeView> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Your Ballance'),
+      ),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -70,51 +73,59 @@ class _HomeViewState extends State<HomeView> {
 
                 return ListView(
                   children: snapshot.data!.docs.map((document) {
-                    return Padding(
-                        padding:
-                            EdgeInsets.only(top: 5.0, left: 15.0, right: 15),
-                        child: Container(
-                            //width: MediaQuery.of(context).size.width / 1.3,
-                            height: MediaQuery.of(context).size.height / 12,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14.5),
-                              color: Colors.blue,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton.icon(
-                                    onPressed: () async {
-                                      print("elevated");
-                                      await openDialog(document.id, document['Amount']);
-                                    },
-                                    icon: Icon(Icons.edit),
-                                    label: Text("Edit")),
-                                Text(
-                                  "Coin: ${document.id}",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ItemView()),
+                          );
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 5.0, left: 15.0, right: 15),
+                            child: Container(
+                                height: MediaQuery.of(context).size.height / 12,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14.5),
+                                  color: Colors.blue,
                                 ),
-                                Text(
-                                  "Price: ${getValue(document.id, document['Amount'])}",
-                                  style: TextStyle(
-                                    //fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () async {
-                                    print("Test");
-                                    await removeCoin(document.id);
-                                  },
-                                ),
-                              ],
-                            )));
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton.icon(
+                                        onPressed: () async {
+                                          print("elevated");
+                                          await openDialog(
+                                              document.id, document['Amount']);
+                                        },
+                                        icon: Icon(Icons.edit),
+                                        label: Text("Edit")),
+                                    Text(
+                                      "Coin: ${document.id}",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Price: ${getValue(document.id, document['Amount'])}",
+                                      style: TextStyle(
+                                        //fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () async {
+                                        print("Test");
+                                        await removeCoin(document.id);
+                                      },
+                                    ),
+                                  ],
+                                ))));
                   }).toList(),
                 );
               }),
