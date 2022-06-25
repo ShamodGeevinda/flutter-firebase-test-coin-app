@@ -22,7 +22,9 @@ class _HomeViewState extends State<HomeView> {
   double ethereum = 0.0;
   double tether = 0.0;
   TextEditingController _controller = TextEditingController();
+
   AuthClass auth = AuthClass();
+
 
   @override
   initState() {
@@ -95,14 +97,6 @@ class _HomeViewState extends State<HomeView> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    ElevatedButton.icon(
-                                        onPressed: () async {
-                                          print("elevated");
-                                          await openDialog(
-                                              document.id, document['Amount']);
-                                        },
-                                        icon: Icon(Icons.edit),
-                                        label: Text("Edit")),
                                     Text(
                                       "Coin: ${document.id}",
                                       style: TextStyle(
@@ -116,16 +110,52 @@ class _HomeViewState extends State<HomeView> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed: () async {
-                                        print("Test");
-                                        await auth.removeCoin(document.id);
-                                      },
-                                    ),
+
+                                    PopupMenuButton<int>(
+                                        itemBuilder: (context) => [
+                                              // popupmenu item 1
+                                              PopupMenuItem(
+                                                value: 1,
+                                                // row has two child icon and text.
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.edit),
+                                                    SizedBox(
+                                                      // sized box with width 10
+                                                      width: 10,
+                                                    ),
+                                                    Text("Edit")
+                                                  ],
+                                                ),
+                                              ),
+                                              // popupmenu item 2
+                                              PopupMenuItem(
+                                                value: 2,
+                                                // row has two child icon and text
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.delete),
+                                                    SizedBox(
+                                                      // sized box with width 10
+                                                      width: 10,
+                                                    ),
+                                                    Text("Delete")
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                        offset: Offset(0, 10),
+                                        color: Colors.blue[400],
+                                        elevation: 2,
+                                        onSelected: (value) async {
+                                          if (value == 1) {
+                                            openDialog(document.id,
+                                                document["Amount"]);
+                                          } else if (value == 2) {
+                                            removeCoin(document.id);
+                                          }
+                                        }),
+
                                   ],
                                 ))));
                   }).toList(),
