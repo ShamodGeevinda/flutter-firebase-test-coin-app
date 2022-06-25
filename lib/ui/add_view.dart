@@ -1,5 +1,6 @@
 import '/net/flutterfire.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AddView extends StatefulWidget {
   AddView({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class _AddViewState extends State<AddView> {
     "tether",
     "ethereum",
   ];
+  AuthClass auth = AuthClass();
 
   String dropdownValue = "bitcoin";
   TextEditingController _amountController = TextEditingController();
@@ -56,7 +58,7 @@ class _AddViewState extends State<AddView> {
             ),
             child: MaterialButton(
               onPressed: () async {
-                await addCoin(dropdownValue, _amountController.text);
+                await auth.addCoin(dropdownValue, _amountController.text);
                 Navigator.of(context).pop();
               },
               child: Text("Add"),

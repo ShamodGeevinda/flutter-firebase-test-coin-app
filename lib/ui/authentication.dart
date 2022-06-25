@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '/net/flutterfire.dart';
 import 'package:flutter/material.dart';
 
 import 'home_view.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Authentication extends StatefulWidget {
   Authentication({Key? key}) : super(key: key);
@@ -13,6 +16,7 @@ class Authentication extends StatefulWidget {
 class _AuthenticationState extends State<Authentication> {
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
+  AuthClass auth = AuthClass();
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +76,8 @@ class _AuthenticationState extends State<Authentication> {
               ),
               child: MaterialButton(
                 onPressed: () async {
-                  bool shouldNavigate =
-                      await register(_emailField.text, _passwordField.text);
+                  bool shouldNavigate = await auth.register(
+                      _emailField.text, _passwordField.text);
                   if (shouldNavigate) {
                     Navigator.push(
                       context,
@@ -96,8 +100,8 @@ class _AuthenticationState extends State<Authentication> {
               ),
               child: MaterialButton(
                   onPressed: () async {
-                    bool shouldNavigate =
-                        await signIn(_emailField.text, _passwordField.text);
+                    bool shouldNavigate = await auth.signIn(
+                        _emailField.text, _passwordField.text);
                     if (shouldNavigate) {
                       Navigator.push(
                         context,

@@ -8,6 +8,7 @@ import '/net/api_methods.dart';
 import '/ui/add_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);
@@ -21,7 +22,9 @@ class _HomeViewState extends State<HomeView> {
   double ethereum = 0.0;
   double tether = 0.0;
   TextEditingController _controller = TextEditingController();
-  var choice = <String>['Home', 'Profile', 'Setting', 'Privacy', 'Contact'];
+
+  AuthClass auth = AuthClass();
+
 
   @override
   initState() {
@@ -107,6 +110,7 @@ class _HomeViewState extends State<HomeView> {
                                         color: Colors.white,
                                       ),
                                     ),
+
                                     PopupMenuButton<int>(
                                         itemBuilder: (context) => [
                                               // popupmenu item 1
@@ -151,6 +155,7 @@ class _HomeViewState extends State<HomeView> {
                                             removeCoin(document.id);
                                           }
                                         }),
+
                                   ],
                                 ))));
                   }).toList(),
@@ -188,7 +193,7 @@ class _HomeViewState extends State<HomeView> {
           actions: [
             TextButton(
                 onPressed: () async {
-                  await updateCoin(id, _controller.text);
+                  await auth.updateCoin(id, _controller.text);
                   Navigator.of(context).pop();
                 },
                 child: Text("Submit"))
