@@ -139,4 +139,11 @@ class AuthClass {
   Future<String?> getToken() async {
     return await storage.read(key: "token");
   }
+
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+      await storage.delete(key: "token");
+    } catch (e) {}
+  }
 }

@@ -52,6 +52,17 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Ballance'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await auth.logout();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (builder) => Authentication()),
+                    (route) => false);
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
