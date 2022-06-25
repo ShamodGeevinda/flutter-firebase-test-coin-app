@@ -30,10 +30,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
 
-    print("Shamod : above fn");
-    checklogin();
-    print("Shamod : below fn");
+    print("Shamod : init");
+
     super.initState();
+    checklogin();
   }
 
   void checklogin() async {
@@ -45,6 +45,7 @@ class _MyAppState extends State<MyApp> {
       setState(() {});
     } else {
       currentPage = Authentication();
+      setState(() {});
     }
   }
 
