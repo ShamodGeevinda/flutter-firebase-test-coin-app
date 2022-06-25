@@ -4,18 +4,20 @@ class Loading extends StatefulWidget {
   Loading({Key? key}) : super(key: key);
 
   @override
-  _LoadingState createState() => _LoadingState();
+  _ItemViewState createState() => _ItemViewState();
 }
 
-class _LoadingState extends State<Loading> {
+class _ItemViewState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.topCenter,
-        margin: EdgeInsets.only(top: 20),
-        child: CircularProgressIndicator(
-          value: 0.8,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.purple),
-        ));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Loading....'),
+      ),
+      body: Container(
+          child: Center(
+        child: CircularProgressIndicator(),
+      )),
+    );
   }
 }

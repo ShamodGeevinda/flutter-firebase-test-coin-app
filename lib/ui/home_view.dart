@@ -1,7 +1,7 @@
 // import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coin/net/flutterfire.dart';
+import '/net/flutterfire.dart';
 import 'package:coin/ui/authentication.dart';
 import 'package:coin/ui/item_view.dart';
 import '/net/api_methods.dart';
@@ -24,7 +24,6 @@ class _HomeViewState extends State<HomeView> {
   TextEditingController _controller = TextEditingController();
 
   AuthClass auth = AuthClass();
-
 
   @override
   initState() {
@@ -110,7 +109,6 @@ class _HomeViewState extends State<HomeView> {
                                         color: Colors.white,
                                       ),
                                     ),
-
                                     PopupMenuButton<int>(
                                         itemBuilder: (context) => [
                                               // popupmenu item 1
@@ -152,10 +150,9 @@ class _HomeViewState extends State<HomeView> {
                                             openDialog(document.id,
                                                 document["Amount"]);
                                           } else if (value == 2) {
-                                            removeCoin(document.id);
+                                            auth.removeCoin(document.id);
                                           }
                                         }),
-
                                   ],
                                 ))));
                   }).toList(),

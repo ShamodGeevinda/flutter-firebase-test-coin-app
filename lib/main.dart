@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Widget currentPage = Authentication();
+  Widget currentPage = Loading();
   final storage = new FlutterSecureStorage();
   AuthClass auth = AuthClass();
   @override
