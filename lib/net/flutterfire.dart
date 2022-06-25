@@ -128,7 +128,7 @@ class AuthClass {
 
   Future<void> storetokenanddata(UserCredential userCredential) async {
     await storage.write(
-        key: "token", value: userCredential.credential?.token.toString());
+        key: "token", value: userCredential.user!.uid.toString());
     var val = userCredential.credential?.token;
 
     print("shamod : " + val.toString());
